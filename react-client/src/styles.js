@@ -14,7 +14,7 @@ const styles = {
     float: 'left'
   },
   mainColor: '#808080',
-  ul: {
+  ol: {
     fontSize: '150%',
     fontFamily: 'Arial, Verdana, Sans-serif',
     float: 'left',

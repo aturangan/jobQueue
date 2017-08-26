@@ -21,14 +21,14 @@ class App extends React.Component {
   }
 
   search(input) {
-    input = input.toString();  
-    let www = input.slice(0, 5); 
+    // input = input.toString();  
+    // let www = input.slice(0, 5); 
     
-    if (www === 'www.') {
-      input = 'http://' + input; 
-    }
+    // if (www === 'www.') {
+    //   input = 'http://' + input; 
+    // }
 
-    axios.post('/scrape', { input: input }).then(res => {
+    axios.post('/queue', { input: input }).then(res => {
       if (!res.data) {
         console.log('Error receiving data from the server'); 
       } else {
@@ -44,9 +44,9 @@ class App extends React.Component {
         <div>
           <div>
             <h1 style={ styles.title }>Job Queue</h1>
-            <ListItem searchResults={ this.state.searchResults }/>
+            <ListItem onSearch={ this.search }/>
+            <List searchResults={ this.state.searchResults }/>
             <br/>
-            <List onSearch={ this.search }/>
           </div>
         </div>
       </MuiThemeProvider>

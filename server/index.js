@@ -4,20 +4,22 @@ var items = require('../database-mongo');
 
 var app = express();
 
-// UNCOMMENT FOR REACT
 app.use(express.static(__dirname + '/../react-client/dist'));
+app.use(bodyParser.urlencoded());
+app.use(bodyParser.json());
 
-app.get('/items', function (req, res) {
-  items.selectAll(function(err, data) {
-    if(err) {
-      res.sendStatus(500);
-    } else {
-      res.json(data);
-    }
-  });
+app.post('/queue', function (request, response) {
+  //const url = request.body.input; 
+
+  console.log(request.body);
+  response.send('POST REQUESTTTT WORKINGGG YAYYAYYAYA');
+
+
+
+
 });
 
-app.listen(3000, function() {
-  console.log('listening on port 3000!');
+app.listen(1337, function() {
+  console.log('listening on port 1337!');
 });
 

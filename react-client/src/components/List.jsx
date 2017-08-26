@@ -1,10 +1,10 @@
 import React from 'react';
 import styles from '../styles';
 
-const ListItem = (props) => (
-  <ul style={ styles.ul }>
+const List = (props) => (
+  <ol style={ styles.ol }>
     <li>list entry in list item</li>
-  </ul>
+  </ol>
 );
 
-export default ListItem;
+export default List;

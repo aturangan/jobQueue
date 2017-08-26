@@ -23,7 +23,7 @@ class ListItem extends React.Component {
 
   render() {
     return (
-      <form>
+      <div>
         <SearchInput
           style={ styles.main }
           hintText="http://www.amazon.com"
@@ -38,7 +38,7 @@ class ListItem extends React.Component {
           labelColor="rgb(255, 255, 255)"
           onTouchTap={ () => this.props.onSearch(this.state.input) }
         />
-      </form>
+      </div>
     );
   }
 }
