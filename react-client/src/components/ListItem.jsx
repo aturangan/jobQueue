@@ -36,7 +36,7 @@ class ListItem extends React.Component {
           label="Search" 
           backgroundColor={ styles.mainColor }
           labelColor="rgb(255, 255, 255)"
-          onTouchTap={ () => this.props.onSearch(this.state.input) }
+          onTouchTap={ () => this.props.handleInput(this.state.input) }
         />
       </div>
     );

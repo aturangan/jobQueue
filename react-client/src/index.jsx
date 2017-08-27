@@ -1,12 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-//import $ from 'jquery';
 import axios from 'axios';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
 import List from './components/List.jsx';
 import ListItem from './components/ListItem.jsx'; 
+import { queueJob } from './helpers.js';
 import styles from './styles.js'; 
 
 injectTapEventPlugin();
@@ -15,28 +15,56 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = { 
-      searchResults: []
+      //url: '',
+      feedback: '',
+      jobList: [],
+      searchResults: [] //might not need search results, come back to this
     }
-    this.search = this.search.bind(this); 
+    this.handleInput = this.handleInput.bind(this); 
+    this.checkUrl = this.checkUrl.bind(this); 
   }
 
-  search(input) {
-    // input = input.toString();  
-    // let www = input.slice(0, 5); 
+  checkUrl(url) {
+    const validUrl = /^(ftp|http|https):\/\/[^ "]+$/.test(url);
+    return validUrl; 
+  }
+
+  handleInput(url) {
+   // url.preventDefault();
     
-    // if (www === 'www.') {
-    //   input = 'http://' + input; 
-    // }
-
-    axios.post('/queue', { input: input }).then(res => {
-      if (!res.data) {
-        console.log('Error receiving data from the server'); 
-      } else {
-        console.log('Data received from Server: ', res.data); 
-        this.setState({ searchResults: res.data });
-      }
-    });
+    if (this.checkUrl(url)) {
+      queueJob({ url: url }, job => {
+        this.setState({
+          jobList: this.state.jobList.concat([job]),
+          feedback: `Job ${ job.jobId } queued!`
+        })
+      });
+    }
   }
+
+  // updateStatus(job) {
+  //   getJobStatus(job.jobId, status => {
+  //     let newState = this.state.jobs;
+  //     let newMessage;
+
+  //     if (status) {
+  //       for (var i in newState) {
+  //         if (newState[i].jobId == job.jobId) {
+  //           newState[i].html = job.html;
+  //           newState[i].completed = true;
+  //           break;
+  //         }
+  //       }
+  //       newMessage = `JOB-ID ${job.jobId} has been processed`;
+  //     } else {
+  //       newMessage = `JOB-ID ${job.jobId} has not yet been processed`
+  //     }
+  //     this.setState({ 
+  //       jobs: newState,
+  //       message: newMessage
+  //     });
+  //   });
+  // }
 
   render () {
     return (
@@ -44,7 +72,7 @@ class App extends React.Component {
         <div>
           <div>
             <h1 style={ styles.title }>Job Queue</h1>
-            <ListItem onSearch={ this.search }/>
+            <ListItem handleInput={ this.handleInput }/>
             <List searchResults={ this.state.searchResults }/>
             <br/>
           </div>
