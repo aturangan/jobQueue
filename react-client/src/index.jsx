@@ -16,7 +16,7 @@ class App extends React.Component {
     super(props);
     this.state = { 
       //url: '',
-      feedback: '',
+      feedback: 'Add Some Jobs!',
       jobList: [],
       searchResults: [] //might not need search results, come back to this
     }
@@ -74,6 +74,7 @@ class App extends React.Component {
             <h1 style={ styles.title }>Job Queue</h1>
             <ListItem handleInput={ this.handleInput }/>
             <List searchResults={ this.state.searchResults }/>
+            <h3 style={ styles.h3 }>{ this.state.feedback }</h3>
             <br/>
           </div>
         </div>

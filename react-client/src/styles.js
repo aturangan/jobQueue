@@ -11,7 +11,8 @@ const styles = {
     fontFamily: 'Arial, Verdana, Sans-serif',
     color: '#808080',
     fontSize: '200%',
-    float: 'left'
+    float: 'left',
+    clear: 'both'
   },
   mainColor: '#808080',
   ol: {
@@ -19,7 +20,7 @@ const styles = {
     fontFamily: 'Arial, Verdana, Sans-serif',
     float: 'left',
     position: 'fixed',
-    paddingTop: '3em'
+    paddingTop: '5em'
  },  
   searchButton: {
     display: 'table',

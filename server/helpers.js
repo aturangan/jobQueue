@@ -9,13 +9,14 @@ module.exports.createJob = (req, res) => {
 
   //jobQueue.push(jobId);
   //client.set(`jobId-${jobId}`, formattedUrl);
+  //res.send('from create job!!! yay');
 
-  res.send(JSON.stringify({
+  res.send({
     jobId: jobId++,
-    url: formattedUrl,
+    //url: formattedUrl,
     html: '',
     completed: false
-  }));
+  });
 }
 
 
