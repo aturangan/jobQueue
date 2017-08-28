@@ -17,13 +17,6 @@ const styles = {
     clear: 'both'
   },
   mainColor: '#808080',
-  ol: {
-    fontSize: '150%',
-    fontFamily: 'Arial, Verdana, Sans-serif',
-    float: 'left',
-    position: 'fixed',
-    //paddingTop: '5em'
- },  
   searchButton: {
     display: 'table',
     width: '50px',

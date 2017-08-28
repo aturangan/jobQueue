@@ -5,13 +5,12 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 import styles from '../styles';
 import SingleJob from './SingleJob.jsx';
 
-const blank = []; 
-
 class JobList extends React.Component {
   constructor(props) {
     super(props); 
     this.state = {
-      input: ''
+      input: '',
+      blank: []
     };
     this.onUpdateInput = this.onUpdateInput.bind(this); 
   }
@@ -28,7 +27,7 @@ class JobList extends React.Component {
         <SearchInput
           style={ styles.main }
           hintText="http://www.amazon.com"
-          dataSource={ blank }
+          dataSource={ this.state.blank }
           searchText={ this.state.input }
           onUpdateInput={ this.onUpdateInput }
         />
@@ -39,21 +38,14 @@ class JobList extends React.Component {
           labelColor="rgb(255, 255, 255)"
           onTouchTap={ () => this.props.handleInput(this.state.input) }
         />
-
-
-
-
-
-
-        <table className="table-jobs" style={ styles.jobList }>
+        <table style={ styles.jobList }>
           <thead>
           <tr>
-            <th className="row-id">Job Id</th>
-            <th className="row-action">Action</th>
-            <th className="row-url">Url</th>
+            <th>Job ID</th>
+            <th>Result</th>
+            <th>URL</th>
           </tr>
           </thead>
-
           <tbody>
           {
             this.props.jobsList.map(job => 
@@ -66,9 +58,6 @@ class JobList extends React.Component {
           }
           </tbody>
         </table>
-
-
-
       </div>
     );
   }

@@ -14,9 +14,9 @@ class SingleJob extends React.Component {
         <td>
           <a
             onClick={ this.props.checkJobStatus.bind(null, job) } 
-            href={job.completed ? `/redirect/${job.jobId}` : '#'}
+            href={ job.completed ? `/html/${job.jobId}` : '#' }
           >
-            { job.completed ? 'Go To Site' : 'Check Status' }
+            { job.completed ? 'View HTML' : 'Check Status' }
           </a>
         </td>
         <td>{ job.url }</td>

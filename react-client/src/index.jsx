@@ -14,10 +14,8 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = { 
-      //url: '',
       feedback: 'Add Some Jobs!',
-      jobsList: [],
-      searchResults: [] //might not need search results, come back to this
+      jobsList: []
     }
     this.handleInput = this.handleInput.bind(this); 
     this.checkUrlFormat = this.checkUrlFormat.bind(this); 
@@ -52,9 +50,9 @@ class App extends React.Component {
             break;
           }
         }
-        currentFeedback = `Job ${ job.jobId } is complete!`;
+        currentFeedback = `Job ID: ${ job.jobId } is complete!`;
       } else {
-        currentFeedback = `Job ${ job.jobId } is not complete!`;
+        currentFeedback = `Job ID: ${ job.jobId } is not complete!`;
       }
       this.setState({
         jobsList: list,
@@ -75,9 +73,7 @@ class App extends React.Component {
               jobsList={ this.state.jobsList } 
               checkJobStatus={ this.checkJobStatus } 
             />
-            
             <br/>
-           
           </div>
         </div>
       </MuiThemeProvider>
@@ -86,15 +82,3 @@ class App extends React.Component {
 }
 
 ReactDOM.render(<App />, document.getElementById('app'));
-
-// Create a job queue whose workers fetch data from a URL and store 
-// the results in a database. The job queue should expose a REST API for 
-// adding jobs and checking their status / results.
-
-// Example:
-
-// User submits www.google.com to your endpoint. The user gets back a job id. 
-// Your system fetches www.google.com (the result of which would be HTML) and 
-// stores the result. The user asks for the status of the job id and if the job 
-// is complete, he gets a response that includes the HTML for www.google.com
-

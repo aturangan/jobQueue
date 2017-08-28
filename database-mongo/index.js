@@ -12,21 +12,11 @@ db.once('open', function() {
 });
 
 const jobSchema = mongoose.Schema({
-  //id: { type: String, unique: true },
+  jobId: Number,
   url: String,
-  html: String
+  html: String,
 });
 
 const Job = mongoose.model('Job', jobSchema);
-
-// var selectAll = function(callback) {
-//   Item.find({}, function(err, items) {
-//     if(err) {
-//       callback(err, null);
-//     } else {
-//       callback(null, items);
-//     }
-//   });
-// };
 
 module.exports = Job;

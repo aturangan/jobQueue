@@ -7,16 +7,8 @@ class Queue {
     this.data.push(job); 
   }
 
-  dequeue(job) {
+  dequeue() {
     this.data.shift(); 
-  }
-
-  front() {
-    return this.data[0];
-  }
-
-  back() {
-    return this.data[this.data.length - 1];
   }
 }
 
