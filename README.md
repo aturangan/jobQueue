@@ -4,8 +4,8 @@ This app takes in a url and creates a job queue, allowing the user to view the H
 
 To use it on your local machine:
 
-Install Node/npm
-In your terminal in the root folder, run npm install
-Run 'npm run react-dev'
-Run 'npm run server-dev' in a separate tab
-Open localhost:1337 in your browser
+1. Install Node/npm
+2. In your terminal in the root folder, run npm install
+3. Run 'npm run react-dev'
+4. Run 'npm run server-dev' in a separate tab
+5. Open localhost:1337 in your browser
