@@ -1,12 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import axios from 'axios';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
-import List from './components/List.jsx';
-import ListItem from './components/ListItem.jsx'; 
-import { queueJob } from './helpers.js';
+import SingleJob from './components/SingleJob.jsx';
+import JobList from './components/JobList.jsx'; 
+import { queueJob, jobUpdate } from './helpers.js';
 import styles from './styles.js'; 
 
 injectTapEventPlugin();
@@ -17,54 +16,52 @@ class App extends React.Component {
     this.state = { 
       //url: '',
       feedback: 'Add Some Jobs!',
-      jobList: [],
+      jobsList: [],
       searchResults: [] //might not need search results, come back to this
     }
     this.handleInput = this.handleInput.bind(this); 
-    this.checkUrl = this.checkUrl.bind(this); 
+    this.checkUrlFormat = this.checkUrlFormat.bind(this); 
+    this.checkJobStatus = this.checkJobStatus.bind(this); 
   }
 
-  checkUrl(url) {
+  checkUrlFormat(url) {
     const validUrl = /^(ftp|http|https):\/\/[^ "]+$/.test(url);
     return validUrl; 
   }
 
   handleInput(url) {
-   // url.preventDefault();
-    
-    if (this.checkUrl(url)) {
+    if (this.checkUrlFormat(url)) {
       queueJob({ url: url }, job => {
         this.setState({
-          jobList: this.state.jobList.concat([job]),
-          feedback: `Job ${ job.jobId } queued!`
+          jobsList: this.state.jobsList.concat([job]),
+          feedback: `Job ID: ${ job.jobId } queued!`
         })
       });
     }
   }
 
-  // updateStatus(job) {
-  //   getJobStatus(job.jobId, status => {
-  //     let newState = this.state.jobs;
-  //     let newMessage;
-
-  //     if (status) {
-  //       for (var i in newState) {
-  //         if (newState[i].jobId == job.jobId) {
-  //           newState[i].html = job.html;
-  //           newState[i].completed = true;
-  //           break;
-  //         }
-  //       }
-  //       newMessage = `JOB-ID ${job.jobId} has been processed`;
-  //     } else {
-  //       newMessage = `JOB-ID ${job.jobId} has not yet been processed`
-  //     }
-  //     this.setState({ 
-  //       jobs: newState,
-  //       message: newMessage
-  //     });
-  //   });
-  // }
+  checkJobStatus(job) {
+    let currentFeedback; 
+    jobUpdate(job.jobId, update => {
+      let list = this.state.jobsList;
+      if (update) {
+        for (let prop in list) {
+          if (list[prop].jobId === job.jobId) {
+            list[prop].html = job.html;
+            list[prop].completed = true; 
+            break;
+          }
+        }
+        currentFeedback = `Job ${ job.jobId } is complete!`;
+      } else {
+        currentFeedback = `Job ${ job.jobId } is not complete!`;
+      }
+      this.setState({
+        jobsList: list,
+        feedback: currentFeedback
+      });
+    });
+  }
 
   render () {
     return (
@@ -72,10 +69,15 @@ class App extends React.Component {
         <div>
           <div>
             <h1 style={ styles.title }>Job Queue</h1>
-            <ListItem handleInput={ this.handleInput }/>
-            <List searchResults={ this.state.searchResults }/>
             <h3 style={ styles.h3 }>{ this.state.feedback }</h3>
+            <JobList 
+              handleInput={ this.handleInput }
+              jobsList={ this.state.jobsList } 
+              checkJobStatus={ this.checkJobStatus } 
+            />
+            
             <br/>
+           
           </div>
         </div>
       </MuiThemeProvider>

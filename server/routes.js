@@ -4,6 +4,7 @@
 const express = require('express');
 const router = express.Router();
 const createJob = require('./helpers').createJob;
+const jobUpdate = require('./helpers').jobUpdate; 
 
 
 router.get('/', (req, res) => {
@@ -12,6 +13,7 @@ router.get('/', (req, res) => {
 
 //router.get('/jobs/:id', getJobStatus);
 router.post('/jobs', createJob);
+router.get('/jobs/:id', jobUpdate);
 
 //router.get('/redirect/:id', goToSite);
 
@@ -22,6 +24,11 @@ router.post('/jobs', createJob);
 //})
 
 module.exports = router;
+
+//****** END ******
+
+
+
 
 
 

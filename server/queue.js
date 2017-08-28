@@ -1,16 +1,22 @@
 class Queue {
-  constructor(name, client) {
-    this.name = name;
-    this.client = client;
-    this.timeout = 0;
+  constructor() {
+    this.data = []; 
   }
 
-  push(data) {
-    this.client.rpush(this.name, data);
+  enqueue(job) {
+    this.data.push(job); 
   }
 
-  pop(callback) {
-    this.client.blpop(this.name, this.timeout, callback);   
+  dequeue(job) {
+    this.data.shift(); 
+  }
+
+  front() {
+    return this.data[0];
+  }
+
+  back() {
+    return this.data[this.data.length - 1];
   }
 }
 
