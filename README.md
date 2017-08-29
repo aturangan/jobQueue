@@ -1,10 +1,10 @@
 #jobQueue
 
-This app takes in a url and creates a job queue, allowing the user to view the HTML when the job is complete. Built in React, Express, and Node by Alana Turangan
+This app takes in a url and creates a job queue, allowing the user to view the HTML when the job is complete. Built in React, Express, Node, and MongoDB by Alana Turangan
 
 To use it on your local machine:
 
-1. Install Node/npm
+1. Install Node, npm and Mongo
 2. In your terminal in the root folder, run npm install
 3. Run 'npm run react-dev'
 4. Run 'npm run server-dev' in a separate tab
