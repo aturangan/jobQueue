@@ -8,7 +8,7 @@ class Queue {
   }
 
   dequeue() {
-    this.data.shift(); 
+  	return this.data.shift(); 
   }
 }
 
