@@ -14,7 +14,7 @@ db.once('open', function() {
 const jobSchema = mongoose.Schema({
   jobId: Number,
   url: String,
-  html: String,
+  html: String
 });
 
 const Job = mongoose.model('Job', jobSchema);
