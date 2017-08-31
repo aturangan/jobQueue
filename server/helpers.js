@@ -16,11 +16,8 @@ module.exports.createJob = (req, res) => {
   };
 
   queue.enqueue(jobDetails); 
+  queue.size++; 
 
-  //get job at the front of the queue
-  let job = queue.dequeue(); 
-
-  //send the jobID back to the user, without HTML (job incomplete)
   res.send({
     jobId: jobId,
     url: req.body.url,
@@ -28,11 +25,18 @@ module.exports.createJob = (req, res) => {
     completed: false
   });
 
-  //get the HTML and store results in database
-  getHTML(job);  
+  this.checkQueue();  
 };
 
-const getHTML = (jobDetails) => {
+module.exports.checkQueue = () => {
+  if (queue.data.length > 0) {
+    let job = queue.dequeue(); 
+    queue.size--; 
+    this.getHTML(job); 
+  } 
+};
+
+module.exports.getHTML = (jobDetails) => {
   request.get(jobDetails.url, (error, response, data) => {
     let html;
 
@@ -42,20 +46,28 @@ const getHTML = (jobDetails) => {
       html = '<p>HTML Could Not Be Retrieved</p>'; 
     }
 
-    let DB = new db({
-      jobId: jobDetails.jobId,
-      url: jobDetails.url,
-      html: html
-    });
+    jobDetails.html = html; 
 
-    DB.save(err => {
-      if (err) {
-        console.log('Error Saving to Database', err);
-      } else {
-        console.log('Successfully Saved to Database');
-      }
-    }); 
+    this.saveToDB(jobDetails); 
   });
+};
+
+module.exports.saveToDB = (jobDetails) => {
+  let DB = new db({
+    jobId: jobDetails.jobId,
+    url: jobDetails.url,
+    html: jobDetails.html
+  });
+
+  DB.save(err => {
+    if (err) {
+      console.log('Error Saving to Database', err);
+    } else {
+      console.log('Successfully Saved to Database');
+    }
+  }); 
+
+  this.checkQueue(); 
 };
 
 module.exports.jobUpdate = (req, res) => {
@@ -83,3 +95,5 @@ module.exports.showHTML = (req, res) => {
     }
   });
 };
+
+module.exports.queue = queue; 

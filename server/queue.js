@@ -1,6 +1,7 @@
 class Queue {
   constructor() {
     this.data = []; 
+    this.size = 0; 
   }
 
   enqueue(job) {
