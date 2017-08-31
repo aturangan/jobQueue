@@ -95,5 +95,3 @@ module.exports.showHTML = (req, res) => {
     }
   });
 };
-
-module.exports.queue = queue; 
